@@ -1,0 +1,14 @@
+## Interface: 90001
+## Title: DwTools
+## Author: Downwind / LiLRichy
+## Version: @project-version@
+## Notes: Tools to help with the development of addons.
+## SavedVariables: DwToolsDB
+## DefaultState: enabled
+
+embeds.xml
+
+core.lua
+options.lua
+frameStkBtn.lua
+reloadBtn.lua

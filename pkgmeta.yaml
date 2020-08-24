@@ -8,7 +8,7 @@ externals:
 required-dependencies: 
     - Ace3
 
-manual-changelog: 
+manual-changelog: CHANGELOG.txt
 
 license-output: LICENSE.txt
 

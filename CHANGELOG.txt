@@ -1,0 +1,5 @@
+8/24/2020 - v0.0.3
+    Initial Build and Upload to curse.
+    Add 2 buttons
+    Add Chat commands
+    Add Options

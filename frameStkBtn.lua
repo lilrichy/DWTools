@@ -1,49 +1,68 @@
 -- FrameStack Button
 -- Registers the frame that renders the button in-game. --
-local frameStkBtn = CreateFrame("Button", "DragFrame", UIParent)
+function DwTools:FrameStackButton()
 
-frameStkBtn:SetPoint("Center", 0, 0)
-frameStkBtn:SetSize(90, 90)
+    self.frameStkBtn = CreateFrame("Button", "frameStkBtn", UIParent)
 
-local frameStkIcon = frameStkBtn:CreateTexture("Texture", "Background")
-frameStkIcon:SetTexture("Interface\\ICONS\\Achievement_Garrison_blueprint_medium.blp")
+    self.frameStkBtn:SetMovable(true)
+    self.frameStkBtn:EnableMouse(true)
+    self.frameStkBtn:SetClampedToScreen(true)
+    self.frameStkBtn:RegisterForDrag("LeftButton")
+    self.frameStkBtn:SetScript("OnDragStart", function(frame)
+        if not self.db.profile.frameStackButtonPosition.locked then
+            frame:StartMoving()
+        end
+    end)
 
--- Makes the area behind the background invisible. --
-frameStkIcon:SetMask("Interface\\CharacterFrame\\TempPortraitAlphaMask")
-frameStkIcon:SetAllPoints(frameStkBtn)
+    self.frameStkBtn:SetScript("OnDragStop", function(frame)
+        frame:StopMovingOrSizing()
+        self.db.profile.frameStackButtonPosition.anchor, _, _, self.db.profile.frameStackButtonPosition.x, self.db
+            .profile.frameStackButtonPosition.y = frame:GetPoint()
+    end)
+    self.frameStkBtn:SetPoint(self.db.profile.frameStackButtonPosition.anchor,
+        self.db.profile.frameStackButtonPosition.x, self.db.profile.frameStackButtonPosition.y)
 
-local frameStkRing = frameStkBtn:CreateTexture("Texture", "Overlay")
-frameStkRing:SetAtlas("adventureguide-ring")
-frameStkRing:SetPoint("Center", frameStkBtn)
-frameStkRing:SetSize(120, 120)
+    self.frameStkBtn:SetSize(60, 60)
+    -- self.frameStkBtn:SetScale(self.db.profile.setScale)
 
--- The texture that appears when the button is highlighted. --
-local frameStkHighlightTexture = frameStkBtn:CreateTexture("Texture", "Overlay")
-frameStkHighlightTexture:SetAtlas("adventureguide-rewardring")
-frameStkHighlightTexture:SetPoint("Center", frameStkBtn)
-frameStkHighlightTexture:SetSize(120, 120)
-frameStkHighlightTexture:SetBlendMode("Add")
-frameStkHighlightTexture:SetVertexColor(1, 1, 1, 0.25)
+    local frameStkIcon = self.frameStkBtn:CreateTexture("Texture", "Background")
+    frameStkIcon:SetTexture("Interface\\LFGFRAME\\Inspect")
 
--- When the user mouses over the button the highlight texture shows. --
-frameStkBtn:SetScript("OnEnter", function(self)
-    frameStkHighlightTexture:Show()
-end)
+    -- Makes the area behind the background invisible. --
+    frameStkIcon:SetMask("Interface\\CharacterFrame\\TempPortraitAlphaMask")
+    frameStkIcon:SetAllPoints(self.frameStkBtn)
 
--- When the user mouses out of the button the highlight texture is hidden. --
-frameStkBtn:SetScript("OnLeave", function(self)
-    frameStkHighlightTexture:Hide()
-end)
+    local frameStkRing = self.frameStkBtn:CreateTexture("Texture", "Overlay")
+    frameStkRing:SetAtlas("adventureguide-ring")
+    frameStkRing:SetPoint("Center", self.frameStkBtn)
+    frameStkRing:SetSize(100, 100)
 
--- When the button is clicked.
-frameStkBtn:SetScript('OnClick', function(self)
-  UIParentLoadAddOn("Blizzard_DebugTools");
-  FrameStackTooltip_Toggle();
-end)
+    -- The texture that appears when the button is highlighted. --
+    local frameStkHighlightTexture = self.frameStkBtn:CreateTexture("Texture", "Overlay")
+    frameStkHighlightTexture:SetAtlas("adventureguide-rewardring")
+    frameStkHighlightTexture:SetPoint("Center", self.frameStkBtn)
+    frameStkHighlightTexture:SetSize(100, 100)
+    frameStkHighlightTexture:SetBlendMode("Add")
+    frameStkHighlightTexture:SetVertexColor(1, 1, 1, 0.25)
 
-frameStkBtn:SetMovable(true)
-frameStkBtn:EnableMouse(true)
-frameStkBtn:RegisterForDrag("LeftButton")
-frameStkBtn:SetScript("OnDragStart", frameStkBtn.StartMoving)
-frameStkBtn:SetScript("OnDragStop", frameStkBtn.StopMovingOrSizing)
--- End FrameStack Button
+    -- When the user mouses over the button the highlight texture shows. --
+    self.frameStkBtn:SetScript("OnEnter", function(self)
+        frameStkHighlightTexture:Show()
+    end)
+
+    -- When the user mouses out of the button the highlight texture is hidden. --
+    self.frameStkBtn:SetScript("OnLeave", function(self)
+        frameStkHighlightTexture:Hide()
+    end)
+
+    -- When the button is clicked.
+    self.frameStkBtn:SetScript('OnClick', function(self)
+        UIParentLoadAddOn("Blizzard_DebugTools");
+        FrameStackTooltip_Toggle();
+    end)
+end
+
+-- Scale Update based on slider value
+function DwTools:UpdateFrameStkBtnScale(value)
+    self.frameStkBtn:SetScale(value)
+end

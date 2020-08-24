@@ -1,0 +1,22 @@
+package-as: DwTools
+
+externals:
+    libs: 
+      url: https://repos.curseforge.com/wow/ace3/trunk
+      tag: r1237-alpha
+    
+required-dependencies: 
+    - Ace3
+
+manual-changelog: 
+
+license-output: LICENSE.txt
+
+ignore: # Files and directories beginning with a dot (such as .git) are automatically ignored, as is the pgkmeta file itself.
+    - icon.ai
+    - Releases
+    - ScreenShots
+    - README.md
+    - TODO.txt
+    - libs/tests
+    - Publish.txt

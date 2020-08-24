@@ -2,10 +2,13 @@
 ## Title: DWTools
 ## Author: Downwind / LiLRichy
 ## Version: @project-version@
-## Notes: Dev Tools 
+## Notes: Tools to help with the development of addons.
 ## SavedVariables: DWToolsDB
 ## DefaultState: enabled
 
+embeds.xml
 
+core.lua
+options.lua
 frameStkBtn.lua
 reloadBtn.lua

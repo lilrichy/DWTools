@@ -1,48 +1,66 @@
 -- Reload Button
 -- Registers the frame that renders the button in-game. --
-local reloadBtn = CreateFrame("Button", "DragFrame2", UIParent)
+function DwTools:ReloadButton()
+    self.reloadBtn = CreateFrame("Button", "reloadBtn", UIParent)
 
-reloadBtn:SetPoint("Center", 0, 0)
-reloadBtn:SetSize(90, 90)
+    self.reloadBtn:SetMovable(true)
+    self.reloadBtn:EnableMouse(true)
+    self.reloadBtn:SetClampedToScreen(true)
+    self.reloadBtn:RegisterForDrag("LeftButton")
+    self.reloadBtn:SetScript("OnDragStart", function(frame)
+        if not self.db.profile.reloadButtonPosition.locked then
+            frame:StartMoving()
+        end
+    end)
 
-local reloadIcon = reloadBtn:CreateTexture("Texture", "Background")
-reloadIcon:SetTexture("Interface\\MacroFrame\\MacroFrame-Icon.blp")
+    self.reloadBtn:SetScript("OnDragStop", function(frame)
+        frame:StopMovingOrSizing()
+        self.db.profile.reloadButtonPosition.anchor, _, _, self.db.profile.reloadButtonPosition.x, self.db
+            .profile.reloadButtonPosition.y = frame:GetPoint()
+    end)
+    self.reloadBtn:SetPoint(self.db.profile.reloadButtonPosition.anchor, self.db.profile.reloadButtonPosition.x,
+        self.db.profile.reloadButtonPosition.y)
 
--- Makes the area behind the background invisible. --
-reloadIcon:SetMask("Interface\\CharacterFrame\\TempPortraitAlphaMask")
-reloadIcon:SetAllPoints(reloadBtn)
+    self.reloadBtn:SetSize(60, 60)
+    -- reloadBtn:SetScale(self.db.profile.setScale)
 
-local reloadRing = reloadBtn:CreateTexture("Texture", "Overlay")
-reloadRing:SetAtlas("adventureguide-ring")
-reloadRing:SetPoint("Center", reloadBtn)
-reloadRing:SetSize(120, 120)
+    local reloadIcon = self.reloadBtn:CreateTexture("Texture", "Background")
+    reloadIcon:SetTexture("Interface\\PaperDollInfoFrame\\UI-GearManager-Undo")
 
--- The texture that appears when the button is highlighted. --
-local reloadHighlightTexture = reloadBtn:CreateTexture("Texture", "Overlay")
-reloadHighlightTexture:SetAtlas("adventureguide-rewardring")
-reloadHighlightTexture:SetPoint("Center", reloadBtn)
-reloadHighlightTexture:SetSize(120, 120)
-reloadHighlightTexture:SetBlendMode("Add")
-reloadHighlightTexture:SetVertexColor(1, 1, 1, 0.25)
+    -- Makes the area behind the background invisible. --
+    reloadIcon:SetMask("Interface\\CharacterFrame\\TempPortraitAlphaMask")
+    reloadIcon:SetAllPoints(self.reloadBtn)
 
--- When the user mouses over the button the highlight texture shows. --
-reloadBtn:SetScript("OnEnter", function(self)
-    reloadHighlightTexture:Show()
-end)
+    local reloadRing = self.reloadBtn:CreateTexture("Texture", "Overlay")
+    reloadRing:SetAtlas("adventureguide-ring")
+    reloadRing:SetPoint("Center", self.reloadBtn)
+    reloadRing:SetSize(100, 100)
 
--- When the user mouses out of the button the highlight texture is hidden. --
-reloadBtn:SetScript("OnLeave", function(self)
-    reloadHighlightTexture:Hide()
-end)
+    -- The texture that appears when the button is highlighted. --
+    local reloadHighlightTexture = self.reloadBtn:CreateTexture("Texture", "Overlay")
+    reloadHighlightTexture:SetAtlas("adventureguide-rewardring")
+    reloadHighlightTexture:SetPoint("Center", self.reloadBtn)
+    reloadHighlightTexture:SetSize(100, 100)
+    reloadHighlightTexture:SetBlendMode("Add")
+    reloadHighlightTexture:SetVertexColor(1, 1, 1, 0.25)
 
--- When the button is clicked.
-reloadBtn:SetScript('OnClick', function(self)
-    ReloadUI()
-end)
+    -- When the user mouses over the button the highlight texture shows. --
+    self.reloadBtn:SetScript("OnEnter", function(self)
+        reloadHighlightTexture:Show()
+    end)
 
-reloadBtn:SetMovable(true)
-reloadBtn:EnableMouse(true)
-reloadBtn:RegisterForDrag("LeftButton")
-reloadBtn:SetScript("OnDragStart", reloadBtn.StartMoving)
-reloadBtn:SetScript("OnDragStop", reloadBtn.StopMovingOrSizing)
--- End Reload Button
+    -- When the user mouses out of the button the highlight texture is hidden. --
+    self.reloadBtn:SetScript("OnLeave", function(self)
+        reloadHighlightTexture:Hide()
+    end)
+
+    -- When the button is clicked.
+    self.reloadBtn:SetScript('OnClick', function(self)
+        ReloadUI()
+    end)
+end
+
+-- Scale Update based on slider value
+function DwTools:UpdateReloadBtnScale(value)
+    self.reloadBtn:SetScale(value)
+end

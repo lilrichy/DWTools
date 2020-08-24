@@ -1,0 +1,11 @@
+## Interface: 90001
+## Title: DWTools
+## Author: Downwind / LiLRichy
+## Version: @project-version@
+## Notes: Dev Tools 
+## SavedVariables: DWToolsDB
+## DefaultState: enabled
+
+
+frameStkBtn.lua
+reloadBtn.lua

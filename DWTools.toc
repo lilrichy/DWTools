@@ -1,9 +1,9 @@
 ## Interface: 90001
-## Title: DWTools
+## Title: DwTools
 ## Author: Downwind / LiLRichy
 ## Version: @project-version@
 ## Notes: Tools to help with the development of addons.
-## SavedVariables: DWToolsDB
+## SavedVariables: DwToolsDB
 ## DefaultState: enabled
 
 embeds.xml

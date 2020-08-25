@@ -8,21 +8,21 @@ function DwTools:ReloadButton()
     self.reloadBtn:SetClampedToScreen(true)
     self.reloadBtn:RegisterForDrag("LeftButton")
     self.reloadBtn:SetScript("OnDragStart", function(frame)
-        if not self.db.profile.reloadButtonPosition.locked then
+        if not DwTools.db.profile.reloadButtonPosition.locked then
             frame:StartMoving()
         end
     end)
 
     self.reloadBtn:SetScript("OnDragStop", function(frame)
         frame:StopMovingOrSizing()
-        self.db.profile.reloadButtonPosition.anchor, _, _, self.db.profile.reloadButtonPosition.x, self.db
+        DwTools.db.profile.reloadButtonPosition.anchor, _, _, DwTools.db.profile.reloadButtonPosition.x, DwTools.db
             .profile.reloadButtonPosition.y = frame:GetPoint()
     end)
-    self.reloadBtn:SetPoint(self.db.profile.reloadButtonPosition.anchor, self.db.profile.reloadButtonPosition.x,
-        self.db.profile.reloadButtonPosition.y)
+    self.reloadBtn:SetPoint(DwTools.db.profile.reloadButtonPosition.anchor, DwTools.db.profile.reloadButtonPosition.x,
+        DwTools.db.profile.reloadButtonPosition.y)
 
     self.reloadBtn:SetSize(60, 60)
-    -- reloadBtn:SetScale(self.db.profile.setScale)
+    self.reloadBtn:SetScale(DwTools.db.profile.reloadButtonPosition.scale)
 
     local reloadIcon = self.reloadBtn:CreateTexture("Texture", "Background")
     reloadIcon:SetTexture("Interface\\PaperDollInfoFrame\\UI-GearManager-Undo")

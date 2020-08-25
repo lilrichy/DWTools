@@ -9,21 +9,21 @@ function DwTools:FrameStackButton()
     self.frameStkBtn:SetClampedToScreen(true)
     self.frameStkBtn:RegisterForDrag("LeftButton")
     self.frameStkBtn:SetScript("OnDragStart", function(frame)
-        if not self.db.profile.frameStackButtonPosition.locked then
+        if not DwTools.db.profile.frameStackButtonPosition.locked then
             frame:StartMoving()
         end
     end)
 
     self.frameStkBtn:SetScript("OnDragStop", function(frame)
         frame:StopMovingOrSizing()
-        self.db.profile.frameStackButtonPosition.anchor, _, _, self.db.profile.frameStackButtonPosition.x, self.db
+        DwTools.db.profile.frameStackButtonPosition.anchor, _, _, DwTools.db.profile.frameStackButtonPosition.x, DwTools.db
             .profile.frameStackButtonPosition.y = frame:GetPoint()
     end)
-    self.frameStkBtn:SetPoint(self.db.profile.frameStackButtonPosition.anchor,
-        self.db.profile.frameStackButtonPosition.x, self.db.profile.frameStackButtonPosition.y)
+    self.frameStkBtn:SetPoint(DwTools.db.profile.frameStackButtonPosition.anchor,
+    DwTools.db.profile.frameStackButtonPosition.x, DwTools.db.profile.frameStackButtonPosition.y)
 
     self.frameStkBtn:SetSize(60, 60)
-    -- self.frameStkBtn:SetScale(self.db.profile.setScale)
+    self.frameStkBtn:SetScale(DwTools.db.profile.frameStackButtonPosition.scale)
 
     local frameStkIcon = self.frameStkBtn:CreateTexture("Texture", "Background")
     frameStkIcon:SetTexture("Interface\\LFGFRAME\\Inspect")

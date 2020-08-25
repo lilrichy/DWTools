@@ -34,7 +34,7 @@ DwTools.defaults = {
 -- Initialize addon, called directly after the addon is fully loaded
 function DwTools:OnInitialize()
     -- Create database with default values
-    self.db = LibStub("AceDB-3.0"):New("DWToolsDB", self.defaults);
+    DwTools.db = LibStub("AceDB-3.0"):New("DwToolsDB", self.defaults);
  
     -- Register addon message prefix
     C_ChatInfo.RegisterAddonMessagePrefix(PREFIX)
@@ -81,13 +81,13 @@ function DwTools:HandleChatMessageCommands(msg)
         DwTools:updateVisibility()
     elseif command == "toggle" then
         if text == "reload" then
-            DwTools.db.profile.reloadButtonPosition.hidden = not self.db.profile.reloadButtonPosition.hidden
+            DwTools.db.profile.reloadButtonPosition.hidden = not DwTools.db.profile.reloadButtonPosition.hidden
         else
             if text == "framestack" then
-                DwTools.db.profile.frameStackButtonPosition.hidden = not self.db.profile.frameStackButtonPosition.hidden
+                DwTools.db.profile.frameStackButtonPosition.hidden = not DwTools.db.profile.frameStackButtonPosition.hidden
             else
-                DwTools.db.profile.reloadButtonPosition.hidden = not self.db.profile.reloadButtonPosition.hidden
-                DwTools.db.profile.frameStackButtonPosition.hidden = not self.db.profile.frameStackButtonPosition.hidden
+                DwTools.db.profile.reloadButtonPosition.hidden = not DwTools.db.profile.reloadButtonPosition.hidden
+                DwTools.db.profile.frameStackButtonPosition.hidden = not DwTools.db.profile.frameStackButtonPosition.hidden
             end
         end
         DwTools:updateVisibility()
@@ -167,15 +167,15 @@ end
 
 -- Hide and Show things
 function DwTools:updateVisibility()
-    if self.db.profile.reloadButtonPosition.hidden then
-        self.reloadBtn:Show()
+    if DwTools.db.profile.reloadButtonPosition.hidden then
+        DwTools.reloadBtn:Show()
     else
-        self.reloadBtn:Hide()
+        DwTools.reloadBtn:Hide()
     end
-    if self.db.profile.frameStackButtonPosition.hidden then
-        self.frameStkBtn:Show()
+    if DwTools.db.profile.frameStackButtonPosition.hidden then
+        DwTools.frameStkBtn:Show()
     else
-        self.frameStkBtn:Hide()
+        DwTools.frameStkBtn:Hide()
     end
 
 end
